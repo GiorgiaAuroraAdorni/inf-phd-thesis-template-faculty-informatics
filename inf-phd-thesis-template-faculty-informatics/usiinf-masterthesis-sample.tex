@@ -1,0 +1,146 @@
+\documentclass[mscthesis]{usiinfthesis}
+\usepackage{lipsum}
+
+
+\usepackage{listings}
+
+\lstdefinelanguage{algebra}
+{morekeywords={import,sort,constructors,observers,transformers,axioms,if,
+else,end},
+sensitive=false,
+morecomment=[l]{//s},
+}
+
+
+
+\title{My Dissertation - A very long title\\ which runs over two
+  lines} %compulsory
+\specialization{Dependable Distributed Systems}%optional
+\subtitle{Subtitle: Reinventing the World} %optional 
+\author{Philo S. Doctor} %compulsory
+\advisor{The Student's Advisor} %compulsory
+\coadvisor{Co-Advisor} %optional
+\Day{Yesterday} %compulsory
+\Month{September} %compulsory
+\Year{2009} %compulsory, put only the year
+\place{Lugano} %compulsory
+
+\dedication{To my beloved} %optional
+\openepigraph{Someone said \dots}{Someone} %optional
+
+\makeindex %optional, also comment out \theindex at the end
+
+\begin{document}
+
+\maketitle %generates the titlepage, this is FIXED
+
+\frontmatter %generates the frontmatter, this is FIXED
+
+\begin{abstract}
+This is a very abstract abstract. 
+
+\lipsum
+\end{abstract}
+
+\begin{abstract}[Zusammenfassung]
+optional, use only if your external advisor requires it in his/er
+language 
+\\
+
+\lipsum
+\end{abstract}
+
+\begin{acknowledgements}
+\lipsum 
+\end{acknowledgements}
+
+\tableofcontents 
+\listoffigures %optional
+\listoftables %optional
+
+\mainmatter
+
+\chapter{Introduction}
+
+\lipsum
+
+
+
+\chapter[Short title]{A chapter title which will run over two lines --- it's for
+  testing purpose}
+
+\lipsum[1-2]
+
+\section{The first section}
+\lipsum[3-4]
+
+ \section{The second, math section}
+
+\textbf{Theorem 1 (Residue Theorem).}
+Let $f$ be analytic in the region $G$ except for the isolated singularities $a_1,a_2,\ldots,a_m$. If $\gamma$ is a closed rectifiable curve in $G$ which does not pass through any of the points $a_k$ and if $\gamma\approx 0$ in $G$ then
+\[
+\frac{1}{2\pi i}\int_\gamma f = \sum_{k=1}^m n(\gamma;a_k) \text{Res}(f;a_k).
+\]
+\textbf{Theorem 2 (Maximum Modulus).}
+\emph{Let $G$ be a bounded open set in $\mathbb{C}$ and suppose that $f$ is a continuous function on $G^-$ which is analytic in $G$. Then}
+\[
+\max\{|f(z)|:z\in G^-\}=\max \{|f(z)|:z\in \partial G \}.
+\]
+
+\section[third]{A very very long section, titled ``The third section'', with
+  a rather  short text alternative (third)}
+\lipsum \texttt{Some Test}
+\lstset{language=algebra,linewidth=0.95\linewidth,breaklines=true,numbers=left,
+basicstyle=\ttfamily,numberstyle=\tiny,escapeinside={//*}{\^^M},
+mathescape=true}
+\begin{lstlisting}
+import IntSpec, ItemSpec;
+
+sort cart; //*\label{sort}
+
+constructors //*\label{begin-sig}
+create() $\longrightarrow$ cart;
+insert(cart, item) $\longrightarrow$ cart;
+observers
+amount(cart) $\longrightarrow$ int;
+transformers
+delete(cart, item) $\longrightarrow$ cart; //*\label{end-sig}
+
+axioms //*\label{begin-axioms}
+forall c: cart, i, j: item 
+
+amount(create()) $=$ 0; //*\label{begin-amount}
+amount(insert(c,i)) $=$ amount(c) $+$ price(i); //*\label{end-amount}
+delete(create(),i) $=$ create(); //*\label{begin-delete}
+delete(insert(c,i),j) $=$
+if (i =$\:$= j) c
+else insert(delete(c,j),i); //*\label{end-axioms}
+end
+\end{lstlisting}
+
+As you can easily see from the above listing \citet{bbggs:iet07}
+define something weird based on the BPEL specification
+\citep{bpelspec}.
+\nocite{*}
+
+\appendix %optional, use only if you have an appendix
+
+\chapter{Some retarded material}
+\section{It's over\dots}
+\lipsum 
+
+\backmatter
+
+\chapter{Glossary} %optional
+
+%\bibliographystyle{alpha}
+\bibliographystyle{dcu}
+%\bibliographystyle{plainnat}
+\bibliography{biblio}
+
+\cleardoublepage
+\theindex %optional, use only if you have an index, must use
+	  %\makeindex in the preamble
+\lipsum
+
+\end{document}

@@ -1,0 +1,515 @@
+%File: manual.tex
+%Part of: USI dissertation style
+%Author: Jochen Wuttke
+%Date: 2008-01-25
+
+
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{url,xspace,array}
+\newcommand{\clsusiinf}{\textsf{usiinfthesis}\xspace}
+\author{ Domenico Bianculli \and Jochen Wuttke}
+\title{\clsusiinf Dissertation Style
+  Documentation\footnote{\textsf{usiinf} and USI-INF
+  stand for \emph{Universit\`a della Svizzera Italiana (University of
+    Lugano) - Faculty of Informatics}.}}
+
+\begin{document}
+\maketitle
+
+\section{Overview}
+
+The \clsusiinf\LaTeX\ class for USI-INF dissertations is based on the standard
+\textsf{book} class, and provides additional commands, environments
+and default text required for theses submitted at USI-INF.
+Some parts of the document structure are mandatory, and where
+possible, the class file generates those parts automatically. In place
+where this is not possible, the sample file and this documentation
+provide a guide how to get things right.
+
+In the interest of having a somewhat consistent look-and-feel to all
+theses produced at USI-INF, the class file and the commands
+provided take care of formatting and document structure as much as
+possible. You are not supposed to change any of these commands or
+environments. 
+
+\section{Document Structure}
+
+The minimal structure of a dissertation document is shown below:
+\begin{verbatim}
+
+\documentclass[]{usiinfthesis}
+
+\title{My Dissertation - A very long title which runs \\ over two lines} 
+\author{Philo S. Doctor}
+\advisor{The Student's Advisor} 
+\Day{21} 
+\Month{September} 
+\Year{2009} 
+\place{Lugano} 
+\programDirector{The PhD program Director} 
+
+\committee{%
+  \committeeMember{Alonzo Church}{University of California, Los Angeles, USA}
+  \committeeMember{Alan M. Turing}{Princeton University, USA}
+  %there can as many members as you like
+} 
+
+\begin{document}
+\maketitle 
+
+\frontmatter 
+
+\begin{abstract}
+This is a very abstract abstract.
+\end{abstract}
+
+\begin{acknowledgements}
+
+\end{acknowledgements}
+
+\tableofcontents 
+
+\mainmatter
+
+\chapter{Introduction}
+
+\backmatter
+
+\bibliographystyle{alpha}
+\bibliography{biblio}
+
+\end{document}
+\end{verbatim}
+
+The commands in the preamble should be self-explanatory and are
+required to complete the title page and the list of your program
+committee members and such like. A good part of the document structure
+is encoded in the \verb|\frontmatter|, \verb|\mainmatter|, and
+\verb|\backmatter| commands. These commands \emph{must not} be
+omitted in your document.
+
+\subsection{The Frontmatter}
+
+The frontmatter of your document contains everything up to and
+including the table of contents, and possible lists of figures and
+tables. For USI-INF dissertations the format and content of most parts of
+the frontmatter is rather rigidly prescribed. The dissertation class
+provides commands for all these elements, and most of the commands are
+processed internally by the \verb|\frontmatter| command, so you don't
+have to worry about those. \textsf{Abstract} and \textsf{Acknowledgements} appear in the
+final document in the order you place them in the source. So take care
+to write the abstract before the acknowledgements.
+Table~\ref{tab:frontmatter} lists all elements that may appear in the
+frontmatter, which commands create them, and whether or not they must
+be present in your thesis.
+
+\begin{table}
+\centering
+\begin{tabular}{lp{6cm}l}
+\toprule
+Content part & created by & mandatory \\
+\midrule
+Titlepage & \verb|\maketitle| & yes \\
+Submission page & \verb|\frontmatter| & yes \\
+Declaration of own work & \verb|\frontmatter| & yes \\
+Dedication & \verb|\dedication| & no \\
+Epigraph & \verb|\openepigraph| & no \\
+Abstract & \verb|\begin{abstract} \end{abstract}| & yes \\
+Acknowledgements & \verb|\begin{acknowledgements}| \verb|\end{acknowledgements}| & ? \\
+Table of Contents & \verb|\tableofcontents| & yes \\
+List of Figures & \verb|\listoffigures| & no \\
+List of Tables & \verb|\listoftables| & no \\
+any other list & ? & no \\
+\bottomrule
+\end{tabular}
+\caption{Parts of the frontmatter}\label{tab:frontmatter}
+\end{table}
+
+Extra sections you might want or need in your thesis are a second abstract
+in a language different from English (e.g., the language required by
+your double-doctorate program), or additional lists of special
+elements in the text.
+If you want for example a list of algorithms,
+you need to use an extra package to produce it. You can include it as
+the last part of the frontmatter.
+For the extra abstract, you can reuse the \texttt{abstract}
+environment with an extra parameter giving the heading of the section
+(see reference documentation and example).
+
+By default the lists of figures and tables will be included in the
+table of contents if they are present in your document. Most (default)
+styles do \emph{not} do that automatically, so if you add a list and
+it should appear in the contents, you will have to play with
+\texttt{\char`\\addcontentsline} to get what you want.
+
+\subsection{The Main Matter}
+
+The mainmatter of you thesis is the actual content you are supposed to
+write. The main matter \emph{must} begin with the command
+\verb|\mainmatter| before the first of your own chapters.
+
+All structuring commands (from \verb|\chapter| down to
+\verb|\subsection|) can take an optional parameter with a shorter
+version of the section title. This shorter title will be used in the 
+page header and the table of contents.
+
+\subsection{Appendices}
+
+If you want to have an appendix, use the command \verb|\appendix| to
+switch the formatting to ``appendix mode'' and then use the normal
+\verb|\chapter| command for each appendix you have.
+
+\subsection{The Backmatter}
+
+The backmatter contains your references, possibly a glossary and an
+index, and must be started with the command \verb|\backmatter|.
+
+The references and index (if present) will be included in the table of
+contents automatically. An index should start on a recto, that is a
+page with an odd page number. The easiest way to achieve this is to
+precede the \texttt{\char`\\theindex} command with a
+\texttt{\char`\\cleardoublepage}.
+
+The \clsusiinf class does not provide any
+command or environment to produce a glossary or any other possible
+section that you might want to put in the back of your thesis. As
+usual, chapter opened with \texttt{\char`\\chapter} will also appear
+in the table of contents.  while chapters opened with
+\texttt{\char`\\chapter*} will be ignored for the table of
+contents. In both cases, backmatter chapters are \emph{not} numbered.
+
+\section{Command reference}
+
+\reversemarginpar
+
+This command reference lists only commands provided by the USI-INF
+dissertation class. Commands inherited from the \texttt{book} class or
+any of the loaded packages are not documented here, unless we made
+significant changes to them.
+
+\subsection{Preamble Commands and Environments}
+
+
+\noindent
+The research advisor, or main advisor\marginpar{\texttt{\char`\\ advisor}}
+responsible for the student submitting the thesis. This command is
+mandatory and takes one argument. 
+
+\medskip
+
+\noindent
+ The author of this thesis, i.e., you. This\marginpar{\texttt{\char`\\author}} 
+command is mandatory and takes one argument.
+
+\medskip
+
+\noindent
+ The co-advisor of the student. This\marginpar{\texttt{\char`\\coadvisor}} 
+command is optional and should only be used if you have an official
+co-advisor. This command takes one argument.
+
+\medskip
+
+\noindent
+This environment constructs the list of all your committee members.
+\marginpar{\texttt{committee}} You should only use the command
+\verb|\committeeMember| inside this environment. This environment is
+mandatory and appears on the submission page.
+
+\medskip
+
+Creates an entry for one
+committee\marginpar{\texttt{\char`\\committeeMember}}
+member in the list of your
+committee. This commands takes the name of the member as the first
+argument, and her/his affiliation as the second. 
+
+\medskip
+
+\noindent
+These commands form the date when the dissertation was
+accepted.\marginpar{\texttt{\char`\\Day|Month| Year}} These are
+mandatory and appear on the title page and the submission page.
+
+\bigskip
+
+\noindent Inserts an extra page with a
+dedication\marginpar{\texttt{\char`\\dedication}} into the
+frontmatter. This command is optional and takes the full text of your
+dedication as argument.
+
+\medskip
+
+
+\noindent
+Inserts an opening epigraph into the
+frontmatter\marginpar{\texttt{\char`\\openepigraph}}. This command is
+a variant of the normal \verb|\epigraph| command. It takes the
+epigraphs text as the first, and the source as the second parameter.
+This command is optional.
+
+\medskip
+
+\noindent
+This should be \emph{Lugano}, unless you finish your
+\marginpar{\texttt{\char`\\place}}thesis some place
+else. This is mandatory and appears in your declaration of own work.
+
+\medskip
+
+The director of the USI-INF PhD
+program.\marginpar{\texttt{\char`\\programDirector}} This is mandatory
+and appears on the submission page.
+
+\subsection{Text Body Commands and Environments}
+
+Inserts the abstract into the frontmatter.
+\marginpar{\texttt{abstract}} Use this environment to
+produce an abstract that conforms to the thesis requirements. If you
+need a second abstract in another language, use the syntax
+\texttt{\char`\\begin\{abstract\}[Sommario]}.
+
+\medskip
+
+Inserts the acknowledgements into the frontmatter.
+\marginpar{\texttt{acknowledgements}} Use this environment to produce
+an acknowledgements section that conforms to the thesis requirements.
+
+\medskip
+
+\noindent
+This command switches formatting\marginpar{\texttt{\char`\\appendix}} and pagination from the main text
+body to the form required for appendices. This command is optional and
+should only be used if you have appendices. In that case, it must
+appear \emph{after} the last chapter of the main text, and
+\emph{before} the first appendix.
+
+\medskip
+
+\noindent
+This command switches formatting\marginpar{\texttt{\char`\\backmatter}} and pagination to the form used for the
+backmatter. This command \emph{must} appear after the last
+chapter/appendix and before the (optional) glossary and references.
+
+\medskip
+
+\noindent
+Creates most of the frontmatter
+pages\marginpar{\texttt{\char`\\frontmatter}} and initialises formatting and
+pagination settings. This command \emph{must} appear after
+\verb|\maketitle| and before any other commands or text.
+
+\medskip
+
+\noindent
+This command must appear after
+all\marginpar{\texttt{\char`\\mainmatter}} frontmatter parts and before the
+first chapter of the main text body.
+
+\subsection{Class Options}
+
+The default layout produced by the class is targeted to ``electronic''
+\marginpar{\texttt{print}} publishing and uses margins consistent with the normal \LaTeX\
+\texttt{oneside} option. This option
+ switches the layout and various other things to something that is
+more suitable for two-sided printing and binding.
+ Standard \LaTeX\ options \texttt{oneside} or \texttt{twoside} are disabled.
+
+\medskip
+
+\noindent
+By default, the class loads the \texttt{hyperref} package with the proper
+options \marginpar{\texttt{nohyper}}. Since the \texttt{hyperref} package redefines
+many \LaTeX\ commands, it may conflict with other packages you
+use. This option let you  disable the loading of the package.
+
+
+\section{Restrictions and Requirements}
+
+Commands and document elements listed here may not be changed or used in producing your
+thesis.
+
+\section{Required Packages}
+
+The \clsusiinf class makes extensive use of a wide range of
+``standard''\footnote{Standard packages are the ones available in a
+  modern \LaTeX\ distribution, like \TeX Live
+  (\url{http://www.tug.org/texlive}) and Mac\TeX\ (\url{http://www.tug.org/mactex}).}
+\LaTeX\ packages. Table~\ref{tab:packages} lists all packages (and options)
+that are loaded by the class, and thus do not need to be loaded in
+your thesis document.
+
+\begin{table}
+\centering
+\begin{tabular}{>{\sffamily}l>{\ttfamily}l}
+\toprule
+Package & Options\\
+\midrule
+amsmath & \\
+book (class) & a4paper, 12pt, onecolumn, final, openright, titlepage
+\\
+beramono & scaled \\
+booktabs & \\
+caption & font=sf, labelsep=period \\
+epigraph & \\
+fancyhdr & \\
+fontenc & T1\\
+geometry & a4paper \\
+graphicx & \\
+hyperref &  unicode, plainpages=false, pdfpagelabels, breaklinks\\
+hypcap & all \\
+mathdesign & charter\\
+natbib & square \\
+sectsty & \\
+textcomp & \\
+url & \\
+
+\bottomrule
+\end{tabular}
+\caption{Required packages and selected options}\label{tab:packages}
+\end{table}
+
+The packages \texttt{beramono} and \texttt{mathdesign} select, respectively, the
+monospaced and the math fonts.
+The class file also uses the \emph{Optima} font package for the sans
+serif fonts\footnote{The \emph{Optima} (aka \emph{URW Classico}) font
+  is not bundled with \TeX live-based distributions. However, they
+  provide a script, \texttt{getnonfreefonts}, for installing extra
+  fonts. To install \emph{Optima}, just type \texttt{getnonfreefonts
+    classico} on the command line; the script requires \texttt{wget}
+  to be installed.}. \texttt{fontenc} and \texttt{textcomp} are required to
+make these fonts work properly. 
+
+% If you want to change, you have several easy options:
+% \begin{enumerate}
+% \item Use a complete fontpackage that loads correct font settings for
+% all font types. \texttt{bera} is a good example for such packages,
+% even though the font is not that great.
+% \item Replace a specific font style by using a package for that. Our
+% use of \texttt{beramono} gives you an example for that.
+% \item Comment out the three lines of code that load the fonts in the
+% class file. They are preceded by the comment \texttt{font settings}.
+% This will revert back to \LaTeX's default Computer Modern fonts.
+% \end{enumerate}
+
+% Options 1 and 2 do not require you to touch the class file and are
+% recommended. Option three, which doesn't give you much benefit anyway,
+% is possible, but not recommended.
+
+% It is \emph{not} recommended (actually, in the interest of somehow
+% consistent styles in the thesis, it is not \emph{wanted}) that you
+% change the font type of structural elements. This means, you can
+% change which serif and sans serif fonts you want to use, but you
+% should not change \emph{where} serif or sans serif is used.
+
+
+\section{Complete Document}
+
+The listing below shows the complete structure of your thesis with all
+optional content enabled. It is important that you do \emph{not}
+change the order of the commands, parts, and sections in your own
+thesis.
+
+\newpage %temporary widow
+
+\begin{verbatim}
+\documentclass[]{usiinfthesis}
+
+\title{The Title of my Dissertation} %compulsory
+\subtitle{Subtitle: Reinventing the World} %optional 
+\author{Philo S. Doctor} %compulsory
+\advisor{The Student's Advisor} %compulsory
+\coadvisor{Co-Advisor} %optional
+\Day{Yesterday} %defaults to \today
+\Month{September} %compuslory
+\Year{2009} %compulsory, put only the year
+\place{Lugano} %compulsory
+\programDirector{The PhD program Director} %compulsory
+
+\committee{%
+  \committeeMember{Alonzo Church}{University of California, Los Angeles, USA}
+  \committeeMember{Alan M. Turing}{Princeton University, USA}
+  %there can as many members as you like
+} %the committee is compulsory
+
+\dedication{To my beloved} %optional
+\openepigraph{Someone said \dots}{Someone} %optional
+
+\makeindex %optional, also use \theindex at the end
+
+\begin{document}
+\maketitle %generates the titlepage, this is FIXED
+\frontmatter %generates the frontmatter, this is FIXED
+
+\begin{abstract}
+This is a very abstract abstract.
+\end{abstract}
+
+\begin{abstract}[Zusammenfassung]
+%creates a new abstract section with "Zusammenfassung" as heading
+\end{abstract}
+
+\begin{acknowledgements}
+\end{acknowledgements}
+
+\tableofcontents 
+\listoffigures %optional
+\listoftables %optional
+%add any other lists here
+
+\mainmatter
+
+\chapter{Introduction}
+
+\chapter{A chapter title which will run over two lines --- it's for
+  testing purpose}
+
+\section{The first section}
+
+\section{The second, math section}
+
+\section[third]{A very very long section, titled ``The third section'', with
+  a rather  short text alternative (third)}
+
+\appendix %optional, use only if you have an appendix
+
+\chapter{Some retarded material}
+\section{It's over\dots}
+
+\backmatter
+
+\chapter{Glossary} %optional
+
+%\bibliographystyle{alpha} %any style compatible with the natbib package
+\bibliographystyle{dcu}
+%\bibliographystyle{plainnat}
+
+\bibliography{biblio}
+
+\cleardoublepage %the index starts on a recto!
+\theindex %optional, use only if you have an index, must use
+          %\makeindex in the preamble
+
+\end{document}
+\end{verbatim}
+
+\section{Version History}
+\begin{description}
+\item[2009/09/30 v.~1.0.8] \ \\  Fixed spelling of the university name.
+\item[2009/07/05 v.~1.0.7] \ \\  Fixed header capitalization problems
+  in frontmatter. Fixed page number issue with toc, lof, lot
+\item[2009/05/05 v.~1.0.6] \ \\ Fixed compatibility issue with
+  \textsf{TikZ} package. Date commands have a new format.
+\item[2009/04/02 v.~1.0.5 (with fixes)] \ \\ Typos in templated text fixed.
+\item[2009/03/27 v.~1.0.5] \ \\ Changes to support SmallCaps in Sans Serif Fonts. 
+\item[2009/03/17 v.~1.0.4] \ \\ Cosmetic changes to templated text.
+\item[2008/07/25 v.~1.0.3] \ \\ Added support for MSc theses.
+\item[2008/07/24 v.~1.0.2] \ \\ Fixed documentation bug.
+\item[2008/03/18 v.~1.0.1] \ \\Fixed titleplage bug. \\Fixed ToC, LoF, LoT,
+  Bibliography and Index header formatting issues.
+\item[2008/03/17 v.~1.0] initial release
+\end{description}
+
+\end{document}
+% vim:wrap:wm=8:bs=2:expandtab:ts=4:tw=70:
