@@ -185,7 +185,7 @@ BoldItalicFeatures = {FontIndex=3},
 			\ifthenelse{\boolean{@mscthesis}}{Master's Thesis}{Doctoral
 				Dissertation}
 			{submitted to the}\\[2mm]
-			{Faculty of Informatics of the Universit\`a della Svizzera Italiana}\\[2mm]
+			{Faculty of Informatics of the Universit\`a della Svizzera italiana}\\[2mm]
 			{in partial fulfillment of the requirements for the degree of}\\[2mm]
 			\ifthenelse{\boolean{@mscthesis}}{%
 				Master of Science in Informatics%
